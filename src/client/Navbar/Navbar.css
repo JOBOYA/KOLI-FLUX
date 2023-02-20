@@ -1,0 +1,74 @@
+/**Hover line animation nav-link white and transition  **/
+.nav-link {
+  position: relative ;
+  display: block;
+  transition:.5s;
+}
+
+.nav-link:after {
+  position: absolute ;
+  content : '';
+  width: 100%;
+  height: 3px;
+  top: 100%;
+  left: 0;
+  transition: transform .5s;
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.nav-link:hover:after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.nav-link:hover {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+
+
+
+
+.navbar-toggler {
+  color: #fff;
+  transition: 0.2s;
+ 
+}
+
+
+.navbar-toggler:hover {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.navbar-toggler-icon {
+  color: #fff;
+  
+  transition: 0.2s;
+}   
+
+.navbar-toggler-icon:hover {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+.navbar-toggler-icon:focus {
+  color: #fff;
+  border-bottom: 2px solid #fff;
+}
+
+@media (max-width: 768px) {
+  .nav-link:hover {
+    color: #fff;
+    border-bottom: 0px solid #fff;
+    width: 1em;
+  }
+}
+
+.logo:hover {
+  animation: bounce 1s ease-in-out infinite;
+  cursor: pointer;
+}
+
