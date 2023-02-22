@@ -49,7 +49,7 @@ const Search: React.FC = () => {
 
   const handleClick = async () => {
     setLoading(true);
-
+    
     const options = {
      
       method: "GET",
@@ -97,6 +97,7 @@ const Search: React.FC = () => {
 
 
       
+
       
       setItems(items);
       setLoading(false);
