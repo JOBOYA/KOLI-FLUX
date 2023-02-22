@@ -14,7 +14,7 @@ const MyComponent = () => {
   const onClick = async () => {
     try {
       const response = await axios.get(
-          'https://immobilier-leboncoin.p.rapidapi.com/api/v1/annonces',
+          'https://seloger.p.rapidapi.com/properties/list',
           {
               headers: {
                   'X-RapidAPI-Key': X_RapidAPI_Key,
