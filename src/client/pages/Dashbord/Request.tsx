@@ -14,7 +14,7 @@ const MyComponent = () => {
   const onClick = async () => {
     try {
       const response = await axios.get(
-          'https://seloger.p.rapidapi.com/properties/list',
+          'https://seloger.p.rapidapi.com/properties/list?zipCodes=75000&pageIndex=1&pageSize=50&realtyTypes=1&transactionType=1&sortBy=0&includeNewConstructions=true',
           {
               headers: {
                   'X-RapidAPI-Key': X_RapidAPI_Key,
@@ -51,7 +51,7 @@ const MyComponent = () => {
       </button>
 
       
-      {data && (
+      {data ? (
               <textarea
                   className='request-button'
         rows={7}
@@ -67,10 +67,13 @@ const MyComponent = () => {
         }}
       />
       
+      ) : (
+      
+        <div style={{ marginTop: '1rem' }}>Pas de données</div>
       )}
-   
     </div>
   );
 };
+
 
 export default MyComponent;

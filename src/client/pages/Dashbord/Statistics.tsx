@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Chart from 'chart.js';
 import './stats.css'
@@ -26,75 +26,123 @@ const ChartComponent: React.FC = () => {
   };
 
   const [items, setItems] = useState<NewType[]>([]);
- 
+  const [city, setCity] = useState<string>('');
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const chartRef = useRef<Chart | null>(null);
+  const [isSearchButtonClicked, setIsSearchButtonClicked] = useState<boolean>(false);
+
+  const handleSearchButtonClick = () => {
+    setIsSearchButtonClicked(true);
+  };
+
+
+
+const handleResize = () => {
+if (canvasRef.current) {
+const parent = canvasRef.current.parentElement;
+if (parent) {
+canvasRef.current.width = parent.clientWidth;
+canvasRef.current.height = parent.clientHeight;
+}
+}
+if (chartRef.current) {
+chartRef.current.resize();
+}
+};
+
+  const fetchItems = async () => {
+    const params = {
+      zipCodes: city, // Utiliser la ville saisie comme paramètre de requête
+      pageIndex: '1',
+      pageSize: '50',
+      realtyTypes: '1',
+      transactionType: '1',
+      sortBy: '0',
+      includeNewConstructions: 'true',
+    };
+    try {
+      const response = await axios.request({ ...options, params });
+      const items = response.data.items.map((item: any) => ({
+        id: item.id,
+        Object: {
+          city: item.city,
+          price: item.price,
+        },
+      }));
+      setItems(items);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
   useEffect(() => {
-    const fetchItems = async () => {
-     
-
-      try {
-        const response = await axios.request(options);
-        const items = response.data.items.map((item: any) => ({
-          id: item.id,
-          Object: {
-            city: item.city,
-            price: item.price,
-          },
-        }));
-        setItems(items);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     fetchItems();
-  }, []);
+  }, [city]);
 
   useEffect(() => {
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext('2d');
       if (ctx) {
-       new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: items.map((item) => item.Object.city),
-        datasets: [
-          {
-            label: 'Prix',
-            data: items.map((item) => item.Object.price),
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1,
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: items.map((item) => item.Object.city),
+            datasets: [
+              {
+                label: 'Prix',
+                data: items.map((item) => item.Object.price),
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+              },
+            ],
           },
-        ],
-      },
-         options: {
-           scales: {
-             yAxes: [
-               {
-                 ticks: {
-                   beginAtZero: true,
-                 },
-               },
-             ],
-           },
-         },
-       });
+          options: {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    beginAtZero: true,
+                  },
+                },
+              ],
+            },
+          },
+        });
       }
     }
+
+    
+    return () => {
+      if (!isSearchButtonClicked) {
+        setItems([]);
+      }
+    };
   }, [items]);
+  
+  const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCity(event.target.value);
+  };
 
   return (
     <div>
-    <canvas
-      id="stats"
-      style={{  backgroundColor: 'black', borderRadius: '10px' , width: '100vw', height: '100vw'}}
-      ref={canvasRef}   
-    />
-  </div>
+      <div>
+        <label htmlFor="city">Ville :</label>
+        <input type="text" id="city" value={city} onChange={handleCityChange} style={{ margin: '10px' , borderRadius: '10px', width: '100px', height: '20px'}} />
+        <button className='btn bg-secondary' onClick={handleSearchButtonClick}>Rechercher</button>
+      </div>
+      <canvas
+        id="stats"
+        style={{ backgroundColor: 'black', borderRadius: '10px', width: '100vw', height: '100vw' }}
+        ref={canvasRef}
+      />
+    </div>
   );
 };
 
 export default ChartComponent;
-
