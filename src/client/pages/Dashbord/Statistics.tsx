@@ -49,7 +49,7 @@ const ChartComponent: React.FC = () => {
     const ctx = canvasRef.current?.getContext('2d');
     if (ctx) {
       const chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: items.map((item) => item.Object.city),
           datasets: [
@@ -77,7 +77,7 @@ const ChartComponent: React.FC = () => {
       chartRef.current = chart;
     }
   }, [items]);
-  
+
   const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCity(e.target.value);
   };
@@ -93,6 +93,7 @@ const ChartComponent: React.FC = () => {
         params: {
           ...options.params,
           zipCodes: city,
+
         },
       };
 
@@ -101,11 +102,12 @@ const ChartComponent: React.FC = () => {
         .then(function (response) {
           setItems(response.data.result.items);
         })
-        .catch(function (error) { 
+        .catch(function (error) {
           console.error(error);
         });
     }
-  }, [isSearchButtonClicked]);
+  }, [isSearchButtonClicked, city]);
+
 
 
 
