@@ -16,7 +16,7 @@ const options = {
   }
 };
 
-// Charts js  bar chart connected to the API Leboncoin
+// Charts js  bar chart connected to the seloger Leboncoin
 const ChartComponent: React.FC = () => {
   type NewType = {
     Object: {
@@ -31,9 +31,9 @@ const ChartComponent: React.FC = () => {
   const chartRef = useRef<Chart | null>(null);
   const [isSearchButtonClicked, setIsSearchButtonClicked] = useState<boolean>(false);
 
-  const handleSearchButtonClick = () => {
+  const handleSearchButtonClick= React.useCallback(() => {
     setIsSearchButtonClicked(true);
-  };
+  }, [city]);
 
 
 
