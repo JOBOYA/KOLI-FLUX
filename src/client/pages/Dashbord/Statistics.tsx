@@ -31,28 +31,26 @@ const ChartComponent: React.FC = () => {
   const chartRef = useRef<Chart | null>(null);
   const [isSearchButtonClicked, setIsSearchButtonClicked] = useState<boolean>(false);
 
-  const handleSearchButtonClick= React.useCallback(() => {
+  const handleSearchButtonClick = React.useCallback(() => {
     setIsSearchButtonClicked(true);
   }, [city]);
 
-
-
-const handleResize = () => {
-if (canvasRef.current) {
-const parent = canvasRef.current.parentElement;
-if (parent) {
-canvasRef.current.width = parent.clientWidth;
-canvasRef.current.height = parent.clientHeight;
-}
-}
-if (chartRef.current) {
-chartRef.current.resize();
-}
-};
+  const handleResize = () => {
+    if (canvasRef.current) {
+      const parent = canvasRef.current.parentElement;
+      if (parent) {
+        canvasRef.current.width = parent.clientWidth;
+        canvasRef.current.height = parent.clientHeight;
+      }
+    }
+    if (chartRef.current) {
+      chartRef.current.resize();
+    }
+  };
 
   const fetchItems = async () => {
     const params = {
-      zipCodes: city, // Utiliser la ville saisie comme paramètre de requête
+      zipCodes: city,
       pageIndex: '1',
       pageSize: '50',
       realtyTypes: '1',
@@ -74,6 +72,7 @@ chartRef.current.resize();
       console.log(error);
     }
   };
+  
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
