@@ -2,7 +2,7 @@ import React from "react";
 import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
-//footer
+//footer component
 const Footer: React.FC = () => {
   return (
     <div className="footer">
