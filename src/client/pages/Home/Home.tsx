@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Home.css';
 import Img from '../../media/KOLIFLUX.png';
 import '../Footer/footer.css';
+import './globe.mp4'
 import Chart from '../../ChartsJs/chart';
 import Map from '../../ChartsJs/Map';
 import ArrowUp from './ArrowUp';
@@ -45,7 +46,7 @@ const Home: React.FC = () => {
 
   return (
 
-
+// style={{ backgroundImage: `url(${Img})` }}
 
     <div className="home">
 
@@ -53,7 +54,7 @@ const Home: React.FC = () => {
 
 
       <video className='video-container' autoPlay loop muted>{ /*video background*/}
-        <source src={require('../../media/globe.mp4')} type="video/mp4" />
+        <source src={require('../../globe.mp4')} type="video/mp4" />
 
       </video>
     {/*Svg */}
