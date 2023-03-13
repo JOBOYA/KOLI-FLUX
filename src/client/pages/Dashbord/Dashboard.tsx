@@ -3,7 +3,7 @@ import { Layout, Menu, Input, Button, Drawer } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { FormGroup, Form, Label } from 'reactstrap';
 import Request from './Request';
-import Statistics from './Statistics';
+import  Table from './Statistics';
 import { FaHome } from 'react-icons/fa';
 import Logout from '.././../Logout';
 
@@ -155,8 +155,7 @@ const Rent: React.FC = () => {
         {selectedOption === 'option3' && (
 
 
-          <Statistics
-          />
+          <Table/>
 
 
         )}

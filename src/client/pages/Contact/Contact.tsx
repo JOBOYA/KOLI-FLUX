@@ -20,7 +20,7 @@ const ContactForm: React.FC = () => {
   const Form = (e: any) => {
     e.preventDefault();
     try {
-      axios.post('https://koli-flux.herokuapp.com/form', {
+      axios.post('http://localhost:5000/form', {
         name: name,
         email: email,
         message: message,

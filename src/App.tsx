@@ -6,7 +6,7 @@ import Contact from './client/pages/Contact/Contact';
 import "./App.css"
 import './index.css'
 import Navbar from './client/Navbar/Navbar';
-import Login from './client/Login';
+import Login from  './client/Login';
 import Register from './client/Register';
 import Logout from './client/Logout';
 import Dashboard from './client/pages/Dashbord/Dashboard';

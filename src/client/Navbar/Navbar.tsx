@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js"
-import Svg from "../logo.svg";
-
+import Svg from "../media/logo.svg";
 
 //navbar
 const Navbar: React.FC = () => {
