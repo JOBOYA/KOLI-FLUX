@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Home.css';
 import Img from '../../media/KOLIFLUX.png';
 import '../Footer/footer.css';
-import './globe.mp4'
 import Chart from '../../ChartsJs/chart';
 import Map from '../../ChartsJs/Map';
 import ArrowUp from './ArrowUp';
