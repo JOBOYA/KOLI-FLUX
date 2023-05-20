@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { FaUserAlt } from 'react-icons/fa';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Loader from '././loader';
 
 
 //login component 
@@ -14,12 +13,11 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [msg, setMsg] = useState<undefined | string | null>();
-  const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
 
   const Auth = (e: any) => {
-    setLoading(true);
+    
     e.preventDefault();
     try {
       axios.post('https://koliflux.onrender.com/login', {
@@ -33,15 +31,13 @@ const Login: React.FC = () => {
           navigate('/Dashboard');
           if (response.data.msg === 'Login Success') {
 //setTimeOut pour le loader
-            setTimeout(() => {
-              setLoading(true);
-            }, 1000);
+            
 
 
 
           } else {
             setMsg(response.data.msg);
-            setLoading(false);
+            
           }
         }).catch((error) => {
           setMsg(error.response.data.msg);
@@ -57,7 +53,7 @@ const Login: React.FC = () => {
   return (
 
     <div className="contain-box">
-      {loading && <Loader />}
+     
       <div className="login-box">
         <FaUserAlt style={{ backgroundColor: 'white', borderRadius: '50%' }} size={50} />
 
