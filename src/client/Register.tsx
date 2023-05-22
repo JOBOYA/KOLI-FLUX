@@ -23,7 +23,7 @@ const Register = () => {
   const Register = (e: any) => {
     e.preventDefault();
     try {
-      axios.post('http://localhost:5000/users', {
+      axios.post('https://koliflux.onrender.com/users', {
         name: name,
         email: email,
         password: password,

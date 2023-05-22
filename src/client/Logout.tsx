@@ -7,7 +7,7 @@ const Logout: React.FC = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.delete("http://localhost:5000/logout");
+            await axios.delete("https://koliflux.onrender.com/logout");
            localStorage.removeItem("token");
             navigate("/", {replace: true});
         } catch (error) {
