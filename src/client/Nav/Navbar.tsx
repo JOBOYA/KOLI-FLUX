@@ -9,6 +9,11 @@ import Modal from 'react-bootstrap/Modal';
 
 
 
+const myModalContentStyle = {
+  backgroundColor: '#000',
+  opacity: '0.5',
+};
+
 //navbar
 
 const Navbars: React.FC = () => {
@@ -53,30 +58,39 @@ const Navbars: React.FC = () => {
             </li>
           </ul>
         </div>
-        <Modal show={show} onHide={handleClose} style={{opacity: "0.5"}}>
+        <Modal 
+  show={show} 
+  onHide={handleClose} 
+  dialogClassName="my-modal" 
+          contentClassName="my-modal-content"
+        
+>
 
-          <Modal.Header closeButton>
-            <Modal.Title>Menu</Modal.Title>
+<Modal.Header style={myModalContentStyle} closeButton>
+            <Modal.Title style={{color: "white", fontWeight:'bold'}}>Menu</Modal.Title>
           </Modal.Header>
-          <Modal.Body >
+          <Modal.Body style={myModalContentStyle}>
             <ul className="list-unstyled">
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "black", fontWeight:'bold'}} to="/Home">
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "white"}} to="/Home">
                   🏠Accueil
                 </Link>
               </li>
+              <br/>
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "black", fontWeight:'bold'}} to="/Search">
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "white"}} to="/Search">
                 📢Annonces
                 </Link>
               </li>
+              <br/>
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "black", fontWeight:'bold'}} to="/Login">
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "white"}} to="/Login">
                   🙋‍♂️Login
                 </Link>
               </li>
+              <br/>
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "black", fontWeight:'bold'}} to="/Contact">
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{ color: "white", }} to="/Contact">
                 ✍️Contact
                 </Link>
               </li>
