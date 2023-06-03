@@ -57,6 +57,7 @@
     "react-router-dom": "^6.8.1",
     "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.9",
+    "react-spinners": "^0.13.8",
     "react-three-fiber": "^6.0.13",
     "react-type-animation": "^2.1.2",
     "react-typing-effect": "^2.0.5",
