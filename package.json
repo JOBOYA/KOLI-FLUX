@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/canvas-confetti": "^1.6.0",
     "@amcharts/amcharts4": "^4.10.33",
     "@amcharts/amcharts5": "^5.3.2",
     "@amcharts/amcharts5-geodata": "^5.1.0",
