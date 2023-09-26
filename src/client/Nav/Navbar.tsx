@@ -21,7 +21,7 @@ const Navbars: React.FC = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid">
@@ -48,9 +48,9 @@ const Navbars: React.FC = () => {
                 Annonces
               </Link>
             </li>
-            <Link className="nav-link active text-white text-uppercase" aria-current="page" to="/Login">
+            {/*<Link className="nav-link active text-white text-uppercase" aria-current="page" to="/Login">
               Login
-            </Link>
+            </Link>*/}
             <li className="nav-item">
               <Link className="nav-link text-white text-uppercase" to="/Contact">
                 Contact
@@ -58,40 +58,40 @@ const Navbars: React.FC = () => {
             </li>
           </ul>
         </div>
-        <Modal 
-  show={show} 
-  onHide={handleClose} 
-  dialogClassName="my-modal" 
+        <Modal
+          show={show}
+          onHide={handleClose}
+          dialogClassName="my-modal"
           contentClassName="my-modal-content"
-        
->
 
-<Modal.Header style={myModalContentStyle} closeButton>
-            <Modal.Title style={{color: "white", fontWeight:'bold'}}>Menu</Modal.Title>
+        >
+
+          <Modal.Header style={myModalContentStyle} closeButton>
+            <Modal.Title style={{ color: "white", fontWeight: 'bold' }}>Menu</Modal.Title>
           </Modal.Header>
           <Modal.Body style={myModalContentStyle}>
             <ul className="list-unstyled">
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "white"}} to="/Home">
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{ color: "white" }} to="/Home">
                   🏠Accueil
                 </Link>
               </li>
-              <br/>
+              <br />
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "white"}} to="/Search">
-                📢Annonces
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{ color: "white" }} to="/Search">
+                  📢Annonces
                 </Link>
               </li>
-              <br/>
+              <br />
               <li>
-                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{color: "white"}} to="/Login">
+                <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{ color: "white" }} to="/Login">
                   🙋‍♂️Login
                 </Link>
               </li>
-              <br/>
+              <br />
               <li>
                 <Link onClick={handleClose} className="text-decoration-none text-uppercase" style={{ color: "white", }} to="/Contact">
-                ✍️Contact
+                  ✍️Contact
                 </Link>
               </li>
             </ul>

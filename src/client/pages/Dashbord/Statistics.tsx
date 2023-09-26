@@ -1,149 +1,80 @@
-import React, { useState } from "react";
-import { FcSearch } from "react-icons/fc";
-import axios from "axios";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import React, { useState } from 'react';
+import './stats.css'
+import TextField from '@mui/material/TextField';
 
+import SearchIcon from '@mui/icons-material/Search';
+import { DataGrid, GridColDef, GridRowId } from '@mui/x-data-grid';
+import Button from '@mui/material/Button';
+import axios from 'axios';
+import { jsPDF } from 'jspdf';
 
 const X_RapidAPI_Key: string | undefined = process.env.REACT_APP_X_RapidAPI_Key;
 const X_RapidAPI_Host: string | undefined = process.env.REACT_APP_X_RapidAPI_Host;
 
 type Item = {
   id: number;
-  Object: {
-    title: string;
-    bedrooms: number;
-    city: string;
-    price: number;
-    livingArea: number;
-    livingAreaUnit: string;
-    professional: {
-      email: string;
-      phoneNumber: number;
-    };
-    photos: {
-      url: string;
-    }[];
-    medias: {
-      url: string;
-    }[];
-  };
+  title: string;
+  city: string;
+  price: number;
+  email: string;
+  phoneNumber: number;
 };
 
-const styles = StyleSheet.create({
-  page: {
-    backgroundColor: "#ffffff",
-    padding: "20pt",
-  },
-  table: {
-    format: "table",
-    width: "auto",
-    margin: "auto",
-    borderStyle: "solid",
-    borderWidth: "1pt",
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: {
-    margin: "auto",
-    flexDirection: "row",
-  },
-  tableColHeader: {
-    width: "20%",
-    borderStyle: "solid",
-    borderBottomWidth: "1pt",
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-    borderRightWidth: "1pt",
-    backgroundColor: "#f0f0f0",
-    textAlign: "center",
-    padding: "5pt",
-  },
-  tableCol: {
-    width: "20%",
-    borderStyle: "solid",
-    borderBottomWidth: "1pt",
-    borderLeftWidth: 0,
-    borderTopWidth: 0,
-    borderRightWidth: "1pt",
-    textAlign: "center",
-    padding: "5pt",
-  },
-  
-});
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'title', headerName: 'Titre', width: 150 },
+  { field: 'city', headerName: 'Ville', width: 150 },
+  { field: 'price', headerName: 'Prix', width: 110 },
+  { field: 'email', headerName: 'Email', width: 200 },
+  { field: 'phoneNumber', headerName: 'Téléphone', width: 150 },
+];
 
-
-
-const PDFTable = ({ items }: { items: Item[] }) => {
-  return (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.table}>
-          <View style={styles.tableRow}>
-            <View style={styles.tableColHeader}>
-              <Text>Titre</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text>Ville</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text>Prix</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text>Email</Text>
-            </View>
-            <View style={styles.tableColHeader}>
-              <Text>Téléphone</Text>
-            </View>
-          </View>
-          {items.map((item) => (
-            <View key={item.id} style={styles.tableRow}>
-              <View style={styles.tableCol}>
-                <Text>{item.Object.title}</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text>{item.Object.city}</Text>
-              </View>
-              <View style={styles.tableCol}>
-                <Text>{item.Object.price}</Text>
-              </View>
-              <View style={styles.tableCol}>  
-                <Text>{item.Object.professional.email}</Text> 
-              </View>
-              <View style={styles.tableCol}>
-                <Text>{item.Object.professional.phoneNumber}</Text>
-              </View> 
-            </View>
-          ))}
-        </View>
-      </Page>
-    </Document>
-  );
-};
-
-const Table: React.FC = () => {
-  const [searchValue, setSearchValue] = useState("");
+export default function DataGridDemo() {
+  const [searchValue, setSearchValue] = useState('');
   const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [selectionModel, setSelectionModel] = useState<GridRowId[]>([]);
+  const [showSaveMessage, setShowSaveMessage] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+
+
+  const printDocument = () => {
+    const selectedItems = items.filter(item => selectionModel.includes(item.id));
+    const doc = new jsPDF();
+
+    selectedItems.forEach((item, index) => {
+      doc.text(`ID: ${item.id}`, 10, 10 + index * 10);
+      doc.text(`Titre: ${item.title}`, 10, 20 + index * 10);
+      doc.text(`Ville: ${item.city}`, 10, 30 + index * 10);
+      doc.text(`Prix: ${item.price}`, 10, 40 + index * 10);
+      doc.text(`Email: ${item.email}`, 10, 50 + index * 10);
+      doc.text(`Téléphone: ${item.phoneNumber}`, 10, 60 + index * 10);
+
+      // Add more fields as needed...
+    });
+
+    doc.save('output.pdf');
+  };
+
+
+
 
   const handleClick = async () => {
-    setLoading(true);
-
     const options = {
-      method: "GET",
-      url: "https://seloger.p.rapidapi.com/properties/list",
+      method: 'GET',
+      url: 'https://seloger.p.rapidapi.com/properties/list',
       params: {
         zipCodes: searchValue,
-        pageIndex: "1",
-        pageSize: "50",
-        realtyTypes: "1",
-        transactionType: "1",
-        sortBy: "0",
-        includeNewConstructions: "true",
+        pageIndex: '1',
+        pageSize: '50',
+        realtyTypes: '1',
+        transactionType: '1',
+        sortBy: '0',
+        includeNewConstructions: 'true',
       },
       headers: {
-        "x-rapidapi-key": X_RapidAPI_Key,
-        "x-rapidapi-host": X_RapidAPI_Host,
+        'x-rapidapi-key': X_RapidAPI_Key,
+        'x-rapidapi-host': X_RapidAPI_Host,
       },
     };
 
@@ -151,98 +82,88 @@ const Table: React.FC = () => {
       const response = await axios.request(options);
       const items = response.data.items.map((item: any) => ({
         id: item.id,
-        Object: {
-          title: item.title,
-          bedrooms: item.bedrooms,
-          city: item.city,
-          price: item.price,
-          livingArea: item.livingArea,
-          livingAreaUnit: item.livingAreaUnit,
-          professional: {
-            email: item.professional.email,
-            phoneNumber: item.professional.phoneNumber,
-          },
-          photos: item.photos,
-          medias: item.medias,
-        },
+        title: item.title,
+        city: item.city,
+        price: item.price,
+        email: item.professional.email,
+        phoneNumber: item.professional.phoneNumber,
       }));
       setItems(items);
-      setLoading(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  
+  const handleRowSelectionModelChange = (newSelectionModel: GridRowId[]) => {
+    setSelectionModel(newSelectionModel);
+    setShowSaveMessage(newSelectionModel.length > 1);
+    setShowSuccessMessage(false);
+    sessionStorage.setItem('selectedItems', JSON.stringify(newSelectionModel));
+  };
+
   return (
-    <div className="search">
-      <div className="search__container">
-        <div className="search">
-          <input
-            type="text"
-            placeholder="Rechercher par code postal"
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-          
-            <FcSearch className="search-icon" onClick={handleClick} />
-          
+    <>
+      <TextField
+      style={{ marginTop: 30 , marginLeft: 20, width: '50%'}}
+        id="outlined-basic"
+        label="Rechercher par code postal"
+        variant="outlined"
+        value={searchValue}
+        onChange={e => setSearchValue(e.target.value)}
+        onKeyPress={e => e.key === 'Enter' && handleClick()}
+        fullWidth
+        InputProps={{
+          endAdornment: (
+           
+              <SearchIcon
+                onClick={handleClick}
+                style={{ cursor: 'pointer', marginTop: 30 }}
+              />
+           
+          ),
+        }}
+      />
+      {showSaveMessage && (
+        <div style={{ margin: '20px 0', color: 'red' }}>
+          Sélectionnez un seul élément pour pouvoir sauvegarder.
         </div>
-
-             
-        <div className="search__results">
-          {loading ? (
-            <p style={{color: "black"}}>Chargement...</p>
-          ) : (
-            <>
-              {items.length > 0 ? (
-                <table className="table table-striped table-hover table-responsive">
-                  <thead>
-                    <tr>
-                      <th scope="col">Type</th>
-                      <th scope="col">Ville</th>
-                      <th scope="col">Prix</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Téléphone</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {items.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.Object.title}</td>
-                        <td>{item.Object.city}</td>
-                        <td>{item.Object.price}€</td>
-                        <td>{item.Object.professional.email}</td>
-                        <td>{item.Object.professional.phoneNumber}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <p>Aucun résultat.</p>
-              )}
-              <PDFDownloadLink
-                document={<PDFTable items={items} />}
-                  fileName="seloger.pdf"
-                  style={{
-                    textDecoration: "none",
-                    padding: "10px",
-                    color: "#4a4a4a",
-                    backgroundColor: "#f0f0f0",
-                    border: "1px solid #4a4a4a",
-                  }}
-
-              >
-                {({ loading }) =>
-                  loading ? "Loading document..." : "Télécharger le PDF"
-                }
-                </PDFDownloadLink>
-            </>
-          )}
+      )}
+      {showSuccessMessage && (
+        <div style={{ margin: '20px 0', color: 'green' }}>
+          Éléments sauvegardés avec succès !
         </div>
-      </div>
-    </div>
+      )}
+      {selectionModel.length > 0 && !showSaveMessage && !showSuccessMessage && (
+        <>
+
+          <Button
+            onClick={printDocument}
+            variant="contained"
+            style={{
+              marginTop: 30,
+              marginLeft: 20,
+              backgroundColor: '#3f51b5',
+              color: 'white',
+              width: 150,
+              height: 50,
+            }}
+          >
+            Télécharger
+          </Button>
+        </>
+      )}
+      <DataGrid
+        style={{ marginTop: 30}}
+        rows={items}
+        columns={columns}
+        checkboxSelection
+        disableRowSelectionOnClick
+        onRowSelectionModelChange={handleRowSelectionModelChange}
+        rowSelectionModel={selectionModel}
+        pagination
+        
+      
+      />
+    </>
   );
-};
-
-export default Table;
+}

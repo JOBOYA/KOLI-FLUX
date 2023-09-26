@@ -6,7 +6,7 @@ import Contact from './client/pages/Contact/Contact';
 import "./App.css"
 import './index.css'
 import NavBar from './client/Nav/Navbar';
-import Login from  './client/Login';
+//import Login from  './client/Login';
 import Register from './client/Register';
 import Logout from './client/Logout';
 import Dashboard from './client/pages/Dashbord/Dashboard';
@@ -34,7 +34,7 @@ const App: React.FC = () => {
           <Route path="/*" element={<Home />} />
           
           <Route path="/Search" element={<Search />} />
-          <Route path="/Login" element={<Login />} />
+          {/*<Route path="/Login" element={<Login />} />*/}
           <Route path="/Register" element={<Register />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/Dashboard" element={<Dashboard />} />

@@ -20,7 +20,8 @@ const Login: React.FC = () => {
     
     e.preventDefault();
     try {
-      axios.post('https://koliflux.onrender.com/login', {
+      //axios.post('https://koliflux.onrender.com/login', {
+      axios.post('http://localhost:5000/login', {
 
         email: email,
         password: password,
@@ -28,6 +29,7 @@ const Login: React.FC = () => {
       })
 
         .then((response) => {
+          localStorage.setItem('token', response.data.token);
           navigate('/Dashboard');
           if (response.data.msg === 'Login Success') {
 //setTimeOut pour le loader
@@ -53,7 +55,9 @@ const Login: React.FC = () => {
   return (
 
     <div className="contain-box">
-     
+<h1>
+  {msg === 'Login Success' ? 'Bienvenue' : 'Login'}
+</h1>
       <div className="login-box">
         <FaUserAlt style={{ backgroundColor: 'white', borderRadius: '50%' }} size={50} />
 

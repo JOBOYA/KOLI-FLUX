@@ -15,6 +15,8 @@ import Logout from '.././../Logout';
 
 
 
+
+
 const { SubMenu } = Menu;
 const { Header, Content } = Layout;
 
@@ -134,6 +136,7 @@ const Rent: React.FC = () => {
                   </FormGroup>
 
                   <Button id='btn' style={{ height: '100%', margin: '0 30px', marginTop: 30 }} onClick={handleTotalYearly}>Click !</Button>
+                 
                 </Form>
                 <div>
 
@@ -150,8 +153,9 @@ const Rent: React.FC = () => {
 
           </Content>
 
-
+          
         </Layout>
+        
         {selectedOption === 'option3' && (
 
 
@@ -160,7 +164,9 @@ const Rent: React.FC = () => {
 
         )}
       </Layout>
+      
     </Layout>
+    
   );
 };
 

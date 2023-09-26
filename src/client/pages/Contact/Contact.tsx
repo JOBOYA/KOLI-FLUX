@@ -10,17 +10,17 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 //form
 const ContactForm: React.FC = () => {
 
-//Variables
+  //Variables
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
 
-//send form
+  //send form
   const Form = (e: any) => {
     e.preventDefault();
     try {
-      axios.post('https://koliflux.onrender.com/form', {
+      axios.post('http://localhost:5000/form', {
         name: name,
         email: email,
         message: message,

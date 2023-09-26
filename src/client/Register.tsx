@@ -4,12 +4,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import React from 'react';
-import { confirmAlert } from 'react-confirm-alert'; 
+import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-
-
-
-
+import Confetti from 'canvas-confetti';
 
 //register component 
 const Register = () => {
@@ -18,18 +15,20 @@ const Register = () => {
   const [password, setPassword] = useState<string>('');
   const [confPassword, setConfPassword] = useState<string>('');
   const [msg, setMsg] = useState<undefined | string | null>();
+
   const navigate = useNavigate();
-  
+
   const Register = (e: any) => {
     e.preventDefault();
     try {
-      axios.post('https://koliflux.onrender.com/users', {
+      axios.post('http://localhost:5000/users', {
         name: name,
         email: email,
         password: password,
         confPassword: confPassword,
       }).then((response) => {
         if (response.data.msg === 'Register Success') {
+          handleConfetti();
           confirmAlert({
             title: 'Succès',
             message: 'Votre compte a été créé avec succès',
@@ -50,8 +49,16 @@ const Register = () => {
       console.log(error);
     }
   };
-  
-//register form 
+
+  const handleConfetti = () => {
+    let confettiGenerator = Confetti.create(undefined, {
+      resize: true,
+      useWorker: true,
+    });
+    confettiGenerator({ particleCount: 200, spread: 200 });
+  };
+
+  //register form 
   return (
     <div className="contain-box">
       <div className="login-box">
@@ -65,7 +72,6 @@ const Register = () => {
         <h2>Inscription</h2>
 
         <form onSubmit={Register}>
-
           <div className="user-box">
             <input
               type="text"
@@ -105,9 +111,8 @@ const Register = () => {
               required
             />
             <label>Confirmer Mot de Passe</label>
-
           </div>
-          <button className="btn" >
+          <button className="btn confetti-button">
             <span></span>
             <span></span>
             <span></span>
