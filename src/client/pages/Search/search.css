@@ -179,19 +179,18 @@
 
 
 
-@media (max-width: 992px) {
+@media (max-width: 992px) and (min-width: 469px) {
   .card {
-    flex-basis: calc(50% - 20px); /* 2 per row for tablets */
+    flex-basis: calc(50% - 20px); /* 2 cartes par ligne */
+    margin: 10px; /* Ajoute une marge autour des cartes */
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 468px) {
   .card {
-    flex-basis: calc(100% - 20px);
-    
+   width: 100%
   }
 }
-
 
 
 
@@ -323,4 +322,3 @@ button {
   animation: title 1s infinite;
   cursor: pointer;
 }
-

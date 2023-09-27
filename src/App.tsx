@@ -9,7 +9,7 @@ import NavBar from './client/Nav/Navbar';
 //import Login from  './client/Login';
 import Register from './client/Register';
 import Logout from './client/Logout';
-import Dashboard from './client/pages/Dashbord/Dashboard';
+
 import Loader from './client/loader';
 // import Footer from './client/components/Footer/Footer';
 
@@ -37,7 +37,7 @@ const App: React.FC = () => {
           {/*<Route path="/Login" element={<Login />} />*/}
           <Route path="/Register" element={<Register />} />
           <Route path="/Contact" element={<Contact />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
+         
           <Route path="/Logout" element={<Logout />} />
         </Routes>
       </BrowserRouter>
